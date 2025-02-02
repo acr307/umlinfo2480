@@ -1,0 +1,17 @@
+<h1>Manage Articles</h1>
+<form>
+    <div class="form-floating mb-3">
+        <label for="articleTitle">Title</label>
+        <input type="text" id="articleTitle" class="form-control" placeholder="Title">
+    </div>
+    <div class="form-floating mb-3">
+        <label for="articleBody">Body</label>
+        <textarea id="articleBody" class="form-control" placeholder="Body">
+        </textarea>
+    </div>
+    <div class="form-check mb-3">
+        <input class="form-check-input" type="checkbox" id="articleActive" />
+        <label class="form-check-label" for="articleActive">Active</label>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
