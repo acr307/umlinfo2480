@@ -1,0 +1,16 @@
+<h3>My Variables</h3>
+<p id="a631de6b-7ec5-4bc0-a120-1d24205ecc0b" class=""><strong>Exercise:</strong> Create a new variable named <code>todayDate</code> and set it
+    today's date. </p>
+
+<hr/>
+
+<p id="b0b17cfe-e668-4793-b3e9-00e27a9325fa" class=""><strong>Exercise</strong>: Format the output for todayDate to be more 
+    human-readable version of the todayDate variable BUT don&#x27;t change the underlying variable.</p>
+
+    <hr/>
+
+
+    <p id="fdd75171-c4ef-49e8-af90-0149b2170f0f" class=""><strong>Exercise</strong>: Below, add up the price of your 10 books in
+        your Excel Project. Can you do it with only one variable name? Let&#x27;s call it <code>totalBookCost</code>. Hint: Start
+        with <code>&lt;bx:set totalBookCost=0&gt;</code> and go from there. Think you can do it? Don&#x27;t forget to output the
+        final amount to the page.</p>    

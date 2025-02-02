@@ -1,0 +1,5 @@
+<h3>My Component</h3>
+
+<p id="e7ab04f1-1f21-4c0c-aabd-078030b87b42" class=""><strong>Exercise</strong>: In the exercises folder, create a file <code>myComponent.bx</code> which is a class. In component.bxm, make a form
+    that accepts 3 numbers. Create a form on this page which accepts 3 inputs.  When the form is submitted, send the three numbers to a function in myComponent.bx and
+    display the product of the three numbers on the page.</p>

@@ -1,0 +1,31 @@
+{
+    "name":"INFO 2480",
+    "version":"2.0.4",
+    "author":"Dan Card",
+    "location":"ForgeboxStorage",
+    "slug":"uml-2480",
+    "createPackageDirectory":false,
+    "type":"mvc",
+    "keywords":"",
+    "homepage":"",
+    "documentation":"",
+    "repository":{
+        "type":"",
+        "url":""
+    },
+    "bugs":"",
+    "shortDescription":"",
+    "contributors":[],
+    "ignore":[],
+    "devDependencies":{
+        "commandbox-dotenv":"*",
+        "commandbox-cfconfig":"*",
+        "commandbox-cfformat":"*"
+    },
+    "installPaths":{},
+    "dependencies":{},
+    "scripts":{},
+    "testbox":{
+        "runner":"/tests/runner.cfm"
+    }
+}

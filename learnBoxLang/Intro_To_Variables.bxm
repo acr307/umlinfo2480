@@ -1,0 +1,41 @@
+<article id="195efc15-bd2b-49f2-a29d-269f141baec6" class="page sans">
+    <header><h1 class="page-title">Intro To Variables</h1></header>
+    <div class="page-body"><p id="9b52de54-f15b-4cb4-b83d-cc93539f844c" class="">A variable is a place holder. That&#x27;s
+        it. Fairly straightforward in concept. It gets a little more complicated in practice but, really, that&#x27;s
+        it. We&#x27;re used to seeing variables in math classes which are usually called X and Y and other mundane
+        things. In programming, we can certainly do that, but more often we use words that are more descriptive. For
+        example, we might have a variable for the price of a book and call it <code>priceOfBook</code> (remember that document on
+        cases? Here&#x27;s where it comes in). We might have a billing application and have a variable called
+        <code>dayBillIsDue</code> and, surprise, it&#x27;s the day that the bill is due. The name of the variable helps to describe
+        what the variable does.</p>
+        <p id="bf997d51-d584-425c-afe1-e519d4bee3f4" class="">In BoxLang, the <code>&lt;bx:set&gt;</code> tag is used to set or
+            alter variables. For example, <code>&lt;bx:set myDogsName=&quot;fido&quot;&gt;</code> creates a variable named <code>&quot;myDogsName&quot;</code>
+            and sets the value of it to <code>&quot;fido&quot;</code>. Seems straightforward enough. That means that <code>myDogsName</code> is a
+            variable that contains a string. Remember how I said that BoxLang was a &quot;typeless&quot; language?
+            That means that I can just as easily make my variable equal a number, a date or anything else without
+            changing any of that syntax. <code>&lt;bx:set dayBillIsDue = now()&gt;</code> will set the variable <code>dayBillIsDue</code> to today.
+            To display the variable we surround it by #s as in #dayBillIsDue# which will display the date and time it
+            was when we set it.</p>
+        <p id="a631de6b-7ec5-4bc0-a120-1d24205ecc0b" class=""><strong>Exercise:</strong> On the page <code>myVariables.cfm</code> in
+            the exercises folder create a new variable named <code>todayDate</code> and set it
+                today's date. </p>
+        <p id="64a10118-5e7f-4f57-819f-609d4d5226a2" class="">However, notice that it&#x27;s in the Java TimeStamp
+            format. How do you fix that? Psst, the answer is two pages ago.</p>
+        <p id="b0b17cfe-e668-4793-b3e9-00e27a9325fa" class=""><strong>Exercise</strong>: Format the output for todayDate to be more 
+            human-readable version of the todayDate variable BUT don&#x27;t change the underlying variable.</p>
+        <p id="50977eab-4dd9-48b1-8ed5-f946e4d21031" class="">Were you able to figure it out? It quite possibly might be
+            a dateFormatter but that&#x27;s just a theory.</p>
+
+        <p id="640fea9e-c8d0-4c85-bdbf-d58a28b92aa1" class="">Which brings up a good point: if a variable can be
+            anything (date, number, string) and we need it to be something in particular, how can we check and see what type
+            of variable it is? BoxLang (and other languages) give us a way of testing the TYPE of a variable as well as the
+            value of that variable. For example, to test if something is a date you can type <code>#isValid("date",variablename)#</code>. We
+            can see if our <code>todayDate</code> variable is a date by typing <code>#isValid("date",todayDate)#</code> and we get: <code>true</code>.</p>
+        <hr />
+        <p>You can see all the isValid possibilities here: <a target="_blank" href="https://boxlang.ortusbooks.com/boxlang-language/reference/types">https://boxlang.ortusbooks.com/boxlang-language/reference/types</a></p>
+        <hr />
+        <p id="fdd75171-c4ef-49e8-af90-0149b2170f0f" class=""><strong>Exercise</strong>: In the myVariables.cfm page, can you 
+            add up the price of your 10 books in your Excel Project by using one variable name? Let&#x27;s call it <code>totalBookCost</code>.
+             Hint: Start with <code>&lt;bx:set totalBookCost=0&gt;</code> and go from there. Think you can do it? Don&#x27;t forget to output the
+            final amount to the page.</p></div>
+</article>

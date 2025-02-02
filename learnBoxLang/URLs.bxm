@@ -1,0 +1,56 @@
+<article id="09d8bf39-3e69-4134-9516-b26a748303b7" class="page sans">
+    <header><h1 class="page-title">URLs</h1></header>
+   <div class="page-body"><p id="6c49006e-5131-4d19-a776-6d191b68d87d" class="">Each page has many variables present,
+        even if you don&#x27;t see them or declare them. These variables are grouped and placed in virtual buckets on
+        the server and in memory. These &quot;buckets&quot; are called &quot;scopes&quot;. There are several scopes we
+        are going to use in this class but now we are just going to look at two of them: the URL scope and the FORM
+        scope.</p>
+        <p id="6b3db2e7-b1ec-43fd-86e7-41a059f4224d" class=""><span style="border-bottom:0.05em solid"><strong>The URL Scope</strong></span>
+        </p>
+        <p id="00ffa2e2-1422-4aba-9230-9b83e4174c21" class="">Look at the URL of this page. It is
+			<bx:output><code>http://#cgi.HTTP_HOST##cgi.SCRIPT_NAME#?#cgi.QUERY_STRING#</code></bx:output>. 
+            Have you ever looked at a URL and dissected it? The URL breaks down into several parts:</p>
+<bx:output>
+        <ol type="1" id="77cfa633-4b07-46eb-b6a7-978112f94fb5" class="numbered-list" start="1">
+            <li><code>http://</code> - The protocol that is being used. Most websites use http:// or https://</li>
+            <li><code>#cgi.HTTP_HOST#</code> - This is the domain name (and is listed in the DNS records to point to this computer)
+            </li>
+            <li><code>#cgi.SCRIPT_NAME#</code> - This is the folder and file name of the page you are opening</li>
+            <li><code>?#cgi.QUERY_STRING#</code> - This part might be new. We are actually passing in named variables to the page which the
+                page can then use for processing. In this case, whenever you click on a link on the left hand side, this
+                same page is loading. However, based on the value of the &quot;p&quot; variable, different content
+                loads. The &quot;?&quot; sign separates the page name from the variables or &quot;query string&quot; as it's called.
+            </li>
+        </ol>
+    </bx:output>
+         <p id="11359edd-e598-4d6e-9e67-7dd7abce23e6" class=""><strong>Exercise</strong>: Go To <a
+                href="http://amazon.com/">Amazon.com</a> and click on any of the items. Look at the URL. Somewhere in
+            there is a ? which separates the name of the page and the variables that the page uses to render accurately.
+        </p>
+        <p id="98488562-ca7c-4f3d-94a7-3883722693d1" class="">Each language stores and processes these variables
+            differently. BoxLang stores them as a structure in a &quot;bucket&quot; called &quot;URL&quot;. For example, if I
+            use &lt;bx:dump and type &lt;bx:dump var=&quot;#url#&quot; label=&quot;URL&quot; /&gt;</p>
+<bx:dump var="#url#" label="URL" />
+<bx:output>
+        <p id="0bda5d60-f71a-4348-88c7-90e36c4307ae" class="">you&##x27;ll see a structure of all of the URL or &quot;GET&quot;
+            variables that are being passed to this page. Copy this starting and including the &quot;&amp;&quot; sign:
+            <code>&amp;name=Bob&amp;lastname=Marley</code>. Paste it into the address bar AFTER ?p=#url.p# so that it reads
+    <code>?p=#url.p#&amp;name=Bob&amp;lastname=Marley</code> and press Enter to load the page. See how the dump of the URL
+            variables changed above? The &amp; sign is used to separate one variable from another. the format is
+            KEY=Value with no quotes.</p>
+        </bx:output>
+       <p id="b5fd37b6-be12-4cb4-b006-9e5719b9df82" class=""><strong>Exercise #2</strong>:</p>
+        <ol type="1" id="e56ad0b0-203a-419d-a335-d2cd98827245" class="numbered-list" start="1">
+            <li>In the exercises folder, create a new pages called <code>ShowMe.bxm</code>. Put some simple text in it like <code>Hello!</code></li>
+            <li>Also in the exercises folder, open the file called toc.bxm.  The entire page consists of
+                links, each one pointing to one of the pages in the exercise folder. Follow the pattern and add a link to ShowMe.bxm.
+            </li>
+            <li>Can you figure out how the content is appearing? In the exercises/index.bxm page there is a component which is displaying 
+                the other pages. What is it called?
+            </li>
+        </ol>
+        </p>
+
+
+    </div>
+</article>

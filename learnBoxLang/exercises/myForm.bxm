@@ -1,0 +1,4 @@
+<h3>My Form</h3>
+<p>Use HTML to create a form which submits to the same page. Make your form with 5 inputs that coincide with the 
+    properties in your database. On the page include <code>&lt;bx:dump var="#form#" label="The Form Data" /></code> 
+    so you can test the submission of the form.</p>

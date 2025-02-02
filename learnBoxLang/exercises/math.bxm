@@ -1,0 +1,2 @@
+<p><strong>Exercise:</strong>Make an ordered list ( using the ol and li tags ). For each item, output a math problem using 
+    each operator least once and two numbers between 1 and 9 ( i.e. 1+9=????? ).</p>

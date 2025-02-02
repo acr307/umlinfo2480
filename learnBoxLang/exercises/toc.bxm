@@ -1,0 +1,13 @@
+<bx:output>
+    <ol>
+        <li><a href="#cgi.script_name#?p=math">Math</a></li>
+        <li><a href="#cgi.script_name#?p=myDate">Dates</a></li>
+        <li><a href="#cgi.script_name#?p=myvariables">My Variables</a></li>
+        <li><a href="#cgi.script_name#?p=myObjects">My Objects</a></li>
+        <li><a href="#cgi.script_name#?p=myArray">My Array</a></li>
+        <li><a href="#cgi.script_name#?p=myForm">Forms</a></li>
+        <li><a href="#cgi.script_name#?p=mathfunction">Math Function</a></li>
+        <li><a href="#cgi.script_name#?p=component">Component</a></li>
+    </ol>
+</bx:output>
+

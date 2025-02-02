@@ -1,0 +1,80 @@
+<article>
+<h1>Forms</h1>
+<p id="8e3305a1-5f81-46a7-a770-f88a461af351" class="">The same can be used with form data. You might have
+    created forms previous to this in HTML but without some sort of server side language, there is a very
+    limited number of things you can do with that data. Now when we submit a form we can use the variables
+    submitted in our page. Fill out and submit this form:</p>
+<p id="022baae8-69ac-4bef-acbc-fb353d82888c" class="">
+    <bx:output>
+        <div class="card">
+            <div class="card-body">
+        <form action="#cgi.script_name#?p=#p#" method="post">
+            <div class="mb-3">
+                <label for="firstName" class="form-label">First Name</label>
+                <input type="text" class="form-control" id="firstName" name="first" placeholder="First Name">
+            </div>
+            <div class="mb-3">
+                <label for="lastname" class="form-label">Last Name</label>
+                <input type="text" class="form-control" id="lastname" name="last" placeholder="Last Name">
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Email address</label>
+                <input type="email" class="form-control" id="exampleFormControlInput1" name="email" placeholder="name@example.com">
+            </div>
+        <div>
+            <button class="btn btn-primary">Submit</button>
+        </div>
+        </form>
+        </div>
+        </div>
+    </bx:output>
+</p>
+<p><bx:dump var="#form#" label="Form Data" /></p>
+<p id="ed893646-9816-4d5c-aded-ce8f8d6b22c7" class="">See the output above? The form data is in a Struct called
+    Form. We can access the individual pieces typing form.<em>variablename</em>.</p>
+    <code><pre>&lt;form action="#cgi.script_name#?p=#p#" method="post">
+    &lt;div class="mb-3">
+        &lt;label for="firstName" class="form-label">First Name&lt;/label>
+        &lt;input type="text" class="form-control" id="firstName" name="first" placeholder="First Name">
+    &lt;/div>
+    &lt;div class="mb-3">
+        &lt;label for="lastname" class="form-label">Last Name&lt;/label>
+        &lt;input type="text" class="form-control" id="lastname" name="last" placeholder="Last Name">
+    &lt;/div>
+    &lt;div class="mb-3">
+        &lt;label for="exampleFormControlInput1" class="form-label">Email address&lt;/label>
+        &lt;input type="email" class="form-control" id="exampleFormControlInput1" name="email" placeholder="name@example.com">
+    &lt;/div>
+    &lt;div>
+        &lt;button class="btn btn-primary">Submit&lt;/button>
+    &lt;/div>
+&lt;/form></pre></code>
+<p id="c18f843d-9218-49a1-af5f-f930fd32dc4d" class="">A form has several different tags in it. Here are the
+    basics:</p>
+<ol type="1" id="40f140da-3ca5-4f4b-a5cb-a7279c64bc01" class="numbered-list" start="1">
+    <li><code>&lt;form action=&quot;#cgi.SCRIPT_NAME#?#cgi.QUERY_STRING#&quot; method=&quot;post&quot;&gt;</code> - The &lt;form&gt;
+        tag has two essential properties. The first is the <code>action</code> property. This is the file to
+        which the browser will pass the form variables. Put another way, it&#x27;s the page that will load when
+        you submit the form. In this case, we are using BoxLang variables that will automatically put the name of the
+        same page. If you use this, don&#x27;t forget to wrap it in &lt;bx:output&gt;The &quot;method&quot;
+        property says how the variables will be submitted. The two most common methods are &lt;POST&gt; and &lt;GET&gt;.
+        For the moment, let&#x27;s keep it simple. Using &quot;get&quot; will put the variables and their values
+        in the address bar or in the URL scope. Using &quot;post&quot; will submit them another way which is
+        behind the scenes, not in the URL.
+    </li>
+    <li><code>&lt;input type=&quot;text&quot; name=&quot;firstname&quot; placeholder=&quot;First Name&quot; value=&quot;&quot;
+        /&gt;</code> - The input tag defines a place to put in a variable. You name the variable by using the &quot;name&quot;
+        property in the &lt;input&gt; tag. The value is whatever is entered by the user or you predefine with
+        the value property.
+    </li>
+    <li><code>&lt;input type=&quot;submit&quot; value=&quot;save&quot; /&gt;</code> - The &lt;input type=&quot;submit&quot;&gt;
+        creates a button that will submit the form. You can also use a &lt;button&gt; tag if you choose and by
+        default this will submit the form.
+    </li>
+    <li>For more HTML information about forms visit: <a href="http://www.w3schools.com/html/html_forms.asp">http://www.w3schools.com/html/html_forms.asp</a>
+    </li>
+</ol>
+<p id="5df629b5-2497-40b9-a20a-7d92ecef41a0" class=""><strong>Exercise #3</strong>: In the <code>MyForm.bxm</code> page in the exercises
+    folder, use HTML to create a form which submits to the same page. Make your form with 5 inputs that coincide with the 
+    properties in your database. On the page include <code>&lt;bx:dump var=&quot;#form#&quot; label=&quot;The Form Data&quot; /&gt;</code>
+     so you can test the submission of the form.</p>
