@@ -1,0 +1,12 @@
+class {
+    function saveArticle( required string title="", required string description="", numeric status=0 ) {
+        queryExecute("
+            INSERT IGNORE into articles (title, description, status)
+            VALUES (:title, :description, :status)
+        ",{
+            title:arguments.title,
+            description:arguments.description,
+            status:arguments.status
+        });
+    }
+}

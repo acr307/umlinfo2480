@@ -1,17 +1,25 @@
 <h1>Manage Articles</h1>
-<form>
-    <div class="form-floating mb-3">
-        <label for="articleTitle">Title</label>
-        <input type="text" id="articleTitle" class="form-control" placeholder="Title">
-    </div>
-    <div class="form-floating mb-3">
-        <label for="articleBody">Body</label>
-        <textarea id="articleBody" class="form-control" placeholder="Body">
-        </textarea>
-    </div>
-    <div class="form-check mb-3">
-        <input class="form-check-input" type="checkbox" id="articleActive" />
-        <label class="form-check-label" for="articleActive">Active</label>
-    </div>
-    <button type="submit" class="btn btn-primary">Save</button>
-</form>
+<bx:if form.keyExists("title")>
+    <bx:dump var="#form#" />
+    <bx:param name="form.active" default="0" />
+    <bx:set common = createObject("bookstore.common.articles") />
+    <bx:set common.saveArticle(form.title, form.description, form.active) />
+</bx:if>
+<bx:output>
+    <form action="#cgi.script_name#" method="POST">
+        <div class="form-floating mb-3">
+            <label for="articleTitle">Title</label>
+            <input type="text" id="articleTitle" class="form-control" name="title">
+        </div>
+        <div class="form-floating mb-3">
+            <label for="articleBody">Body</label>
+            <textarea id="articleBody" class="form-control" name="description">
+            </textarea>
+        </div>
+        <div class="form-check mb-3">
+            <input class="form-check-input" type="checkbox" id="articleActive" name="articleActive" />
+            <label class="form-check-label" for="articleActive">Active</label>
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+</bx:output>

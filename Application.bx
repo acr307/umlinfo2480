@@ -1,8 +1,8 @@
 class {
 
-            this.name = 'USERNAMEHERE';
+            this.name = 'Andrew_Rodriguez';
             this.sessionmanagement = 'true';
-            this.datasource = 'USERNAME'
+            this.datasource = 'Andrew_Rodriguez'
             public function onApplicationStart() {
                 application.hiddenFolders = [".git","bookstore","learnBoxLang"];
             }
