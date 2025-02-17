@@ -1,0 +1,171 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>SQL TEST</title>
+</head>
+<bx:script>
+	if(!application.keyExists("sqlTest")){
+		application.sqlTest={
+			"attempts":[],
+			"finalCode":""
+		}
+	}
+
+	if(url.keyExists("clearAttempts") && url.clearAttempts){
+		application.sqlTest.attempts=[];
+	}
+
+	if(url.keyExists("clearPhrase") && url.clearPhrase){
+		application.sqlTest.finalCode="";
+	}
+
+	if(form.keyExists("comm")){
+		application.sqlTest.attempts.append(comm);
+
+		try{
+			res = queryExecute(form.comm,{},{datasource="sqltest"});
+			nexter=[];
+			res.each((item,idx)=>{
+				nexter.append(res[res.columnlist.listFirst()][idx]);
+			})
+			application.sqlTest.finalCode = application.sqlTest.finalCode & " " & nexter.toList(" ");
+		} catch(any err){
+			dump(err.message);
+		}
+	}
+</bx:script>
+<cftry>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+		  integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+	<link href="../includes/css/class.css" rel="stylesheet"/>
+	<link href="../includes/css/mycss.css" rel="stylesheet"/>
+<script>
+	function subsq(){
+		var q=document.createElement('li');
+		q.innerHTML=document.getElementById('subsql').value;
+		document.getElementById('attemptnumbers').appendChild(q);
+		var x=new sqlt();
+		x.setCallbackHandler(procs);
+		x.setErrorHandler(whoops);
+		x.runsql(document.getElementById('subsql').value);
+	}
+	function procs(e){
+
+		if(e.DATA) {
+			for (var q in e.DATA) {
+				document.getElementById('finalcode').innerHTML = document.getElementById('finalcode').innerHTML + e.DATA[q];
+			}
+		} else {
+			alert("Sorry, I couldn't parse that answer. The error message I got was: " + e)
+		}
+	}
+	
+	function whoops(e){
+		alert("whooops");
+		alert(e);	
+	}
+	
+	function clearphrase(){
+		document.getElementById('finalcode').innerHTML='Final Answer:';
+	}
+</script>	
+
+<body>
+	<div id="wrapper" class="container">
+		<h1>SQL Query Test</h1>
+		<div class="card" style="margin-bottom:10px">
+			<div class="card-body">
+				<h5 class="card-title card-header">Directions</h5>
+				<p class="card-text">This exercise will test your ability to "translate" everyday language into SQL syntax.
+					For each of the following sentances, create an SQL statement and type it into the textarea labeled "SQL Entry".
+					Submit each, one by one by clicking on the Enter SQL button. The result will show up in the "Final Answer" area.
+				</p>
+				<h5 class="card-title">Key Facts</h5>
+				<ul>
+					<li>All of the queries are being made against a table called "sqltest".</li>
+					<li>The table has the following fields: mykey, code1, code2, code3, startdate, enddate, num1, num2, username, active.</li>
+					<li>Most of the datatable has gibberish in it but if you get all of the SQL statements correct, you will get back an intelligible phrase to paste into Blackboard.</li>
+				</ul>
+			</div>
+		</div>
+		
+		<bx:output>
+			<div class="row">
+				<div class="col-7">
+					<div class="card">
+						<div class="card-body">
+							<h5 class="card-title card-header">Statements</h5>
+							<ol class="list-group list-group-flush">
+								<li class="list-group-item">1. Get the field "code1" on the record where the field "code2" has a value of '0DB9B697-B879-10BF-E2BBA90B97A38C0B' </li>
+								<li class="list-group-item">2. Get the field "code2"" where the num1 field has a value of 629</li>
+								<li class="list-group-item">3. Get the field code3 where the row is active.</li>
+								<li class="list-group-item">4. Get the code2 field where code1 is equal to '0DB99E73-CC09-2CE8-5DE64A8DD29021BE' and num2 is 323</li>
+								<li class="list-group-item">5. Get code1 from the sqltest table. Use the startdate of Feb. 20, 2015</li>
+								<li class="list-group-item">6. Get code1. The startdate is after Independence Day, 2017 and before New Years Day, 2018.</li>
+								<li class="list-group-item">7. Get the code2 field  where the code2 field starts with a "t" and ends with a "g". Hint: This one has a little bit of a twist. You might need to play with the wildcard(s) placement.</li>
+								<li class="list-group-item">8. Get the username where the num1 is 929 and the num2 has the digits '490' in the middle.</li>
+								<li class="list-group-item">9. Get code3 where the username is larger than a8 and smaller than a93. Sort the results Z-A  order on the username field.  How many records are you expecting to get back? How many records did you get back? </li>
+								<li class="list-group-item">10. Copy the phrase which appeared and message it to Prof Card in Blackboard. Enjoy!</li>
+							</ol>
+						</div>
+					</div>
+				</div>
+				<div class="col-5">
+					<div class="card">
+						<div class="card-body">
+							<h5 class="card-title card-header">SQL Entry</h5>
+							<form action="#cgi.script_name#" method="POST" id="sqlForm">
+								<textarea id="subsql" name="comm" style="width:100%; height:100px" class="form-control"></textarea>
+								<!---<div style="display:flex; flex-direction: row; justify-content: flex-start">--->
+								<div class="card-footer text-body-secondary">
+									<div class="row">
+										<div class="col-4">&nbsp;</div>
+										<div class="col-lg-4">
+											<button type="submit" class="btn btn-primary">Enter SQL</button>
+										</div>
+										<div class="col-lg-4">
+											<button onclick="document.getElementById('subsql').value='';" class="btn btn-success">Clear SQL box</button>
+										</div>
+									</div>
+								</div>				
+							</form>
+						</div>
+					</div>
+					<div class="card">
+						<div class="card-body">
+							<h5 class="card-title ">Phrase</h5>
+							<h6 class="card-subtitle mb-2 text-body-secondary card-header ">When you're done, message this to Professor Card</h6>
+							<p class="card-text">	#application.sqltest.finalCode.len() ? application.sqltest.finalCode : "Phrase Will Appear Here"#</p>
+
+							
+							<div class="card-footer">
+								<a href="#cgi.script_name#?clearPhrase=true" class="btn btn-warning">Clear Phrase</a>
+							</div>
+						</div>
+					</div>
+					<div class="card">
+						<div class="card-body">
+							<h5 class="card-title card-header">Attempts:</h5>
+							<h6 class="card-subtitle mb-2 text-body-secondary">Here is a record of your attempts in case you need to start over again or need a reference</h6>
+							<ul>
+								<bx:loop array="#application.sqltest.attempts#" item="item">
+									<li>#item#</li>			
+								</bx:loop>
+							</ul>
+							
+							<div class="card-footer">
+								<a href="#cgi.script_name#?clearAttempts=true" class="btn btn-warning">Clear Attempts</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>	
+		</bx:output>
+    </div>
+</body>
+<cfcatch type="any">
+	<cfdump var="#cfcatch#" />
+</cfcatch>
+</cftry>
+</html>

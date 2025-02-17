@@ -1,0 +1,20 @@
+class {
+
+    function runSql(required string comm ){
+        try{
+            if(comm.findNoCase("insert")){
+                return "No Inserts Allowed!";
+            } else if(comm.findNoCase("update")){
+                return "No Updates Allowed!"
+            } else if(comm.findNoCase("delete")){
+                return "No deletes Allowed!";
+            }
+
+            var qb = new query(datasource="sql");
+            qb.setSql(PreserveSingleQuotes(comm));
+            return qb.execute().getResult();
+        } catch( any err){
+            return "#err.message#: #comm#";
+        }
+    }
+}

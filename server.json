@@ -1,10 +1,9 @@
 {
     "app":{
-        "cfengine":"boxlang@1.0.0-beta9+13"
+        "cfengine":"boxlang"
     },
-    "javaVersion":"openjdk21_jdk",
     "JVM":{
-        "javaVersion":"openjdk21_jdk"
+        "javaVersion":"openjdk21"
     },
     "scripts":{
         "onServerInitialInstall":"install bx-mysql"

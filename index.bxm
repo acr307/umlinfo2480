@@ -37,6 +37,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="learnBoxLang">Learn BoxLang</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="learnSQL">Learn SQL</a>
+                        </li>
                         <!---
                             Add your custom links below this line.
                             To keep the same formatting as the above items, use this format:

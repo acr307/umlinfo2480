@@ -26,6 +26,14 @@
                     "password":"${PPWD}",
                     "port":"${PPORT}",
                     "username":"${PUSER}"
+                },
+                "sqltest":{
+                    "database":"sqltest",
+                    "driver":"mysql",
+                    "host":"uml2480-mysql.cyqisqc1fx3i.us-west-2.rds.amazonaws.com",
+                    "password":"6327602E-F241-453C-8B9FDBF05AC89D6C",
+                    "port":"3306",
+                    "username":"sqltest"
                 }
             },
             "whitespaceManagement":"white-space-pref"

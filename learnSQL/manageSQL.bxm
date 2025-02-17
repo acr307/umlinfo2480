@@ -1,0 +1,16 @@
+<bx:loop from=1 to="100" index="x">
+    <bx:script>
+        startdate = dateformat(dateAdd('d',x,now()),"yyyy-MM-dd");
+        enddate = dateFormat(dateAdd('d',x+3,now()),"yyyy-MM-dd");
+        queryExecute("insert into sqltest (mykey,code1,code2,code3,startdate,enddate,num1,num2,username,active) 
+            values 
+            (#x#,'#createuuid()#','#createuuid()#','#createuuid()#','#startdate#','#enddate#','#randrange(1,1000)#','#randrange(1,1000)#','#createuuid()#',0)",
+            {},
+            {
+                datasource="sqltest"
+            }
+            
+            )
+
+    </bx:script>
+</bx:loop>
