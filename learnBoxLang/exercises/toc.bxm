@@ -8,6 +8,7 @@
         <li><a href="#cgi.script_name#?p=myForm">Forms</a></li>
         <li><a href="#cgi.script_name#?p=mathfunction">Math Function</a></li>
         <li><a href="#cgi.script_name#?p=component">Component</a></li>
+        <li><a href="#cgi.script_name#?p=showMe">Show Me</a></li>
     </ol>
 </bx:output>
 

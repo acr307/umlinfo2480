@@ -3,3 +3,24 @@
 <p id="e7ab04f1-1f21-4c0c-aabd-078030b87b42" class=""><strong>Exercise</strong>: In the exercises folder, create a file <code>myComponent.bx</code> which is a class. In component.bxm, make a form
     that accepts 3 numbers. Create a form on this page which accepts 3 inputs.  When the form is submitted, send the three numbers to a function in myComponent.bx and
     display the product of the three numbers on the page.</p>
+
+<form action="#cgi.script_name#?p=#p#" method="post">
+    <div class="mb-3">
+        <label for="firstnum" class="form-label">First Number</label>
+        <input type="numeric" class="form-control" id="firstnum" name="firstnum" placeholder="First Number">
+    </div>
+    <div class="mb-3">
+        <label for="secondnum" class="form-label">Second Number</label>
+        <input type="numeric" class="form-control" id="secondnum" name="secondnum" placeholder="Second Number">
+    </div>
+    <div class="mb-3">
+        <label for="thirdnum" class="form-label">Third Number</label>
+        <input type="numeric" class="form-control" id="thirdnum" name="thirdnum" placeholder="Third Number">
+    </div>
+    <div>
+        <button class="btn btn-primary">Multiply!</button>
+    </div>
+</form>
+
+<bx:set formProduct = createObject("myComponent") />
+The product of my three numbers is <bx:output>#formProduct.multiplyTheNumbers(form.firstnum,form.secondnum,form.thirdnum)#</bx:output>

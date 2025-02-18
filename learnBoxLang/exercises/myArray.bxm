@@ -5,3 +5,65 @@
     thing? If not, no stress but stay tuned. I know that this exercise is repetitive. In a few screens we are
     going to see how we can make the computer create the objects and arrays we want more easily and
     automatically. For now though, just type it out.</p>
+
+<bx:set listOfBooks='[
+"List of Books">,
+{
+    title: "The Jungle">,
+    author: "Upton Sinclair">,
+    yearPublished: 1906>,
+    genre: "Political Fiction">,
+    isRead: true>,
+    isRecommended: true>
+},
+{
+    title: "1984">,
+    author: "George Orwell">,
+    yearPublished: 1949>,
+    genre: "Dystopian">,
+    isRead: true>,
+    isRecommended: true>
+},
+{
+    title: "To Kill a Mockingbird">,
+    author: "Harper Lee">,
+    yearPublished: 1960>,
+    genre: "Fiction">,
+    isRead: true>,
+    isRecommended: true>
+},
+{
+    title: "Moby-Dick">,
+    author: "Herman Melville">,
+    yearPublished: 1851>,
+    genre: "Adventure">,
+    isRead: false>,
+    isRecommended: false>
+},
+{
+    title: "Pride and Prejudice">,
+    author: "Jane Austen">,
+    yearPublished: 1813>,
+    genre: "Romance">,
+    isRead: true>,
+    isRecommended: true>
+},
+{
+    title: "Brave New World">,
+    author: "Aldous Huxley">,
+    yearPublished: 1932>,
+    genre: "Dystopian">,
+    isRead: true>,
+    isRecommended: true>
+},
+{
+    title: "Frankenstein">,
+    author: "Mary Shelley">,
+    yearPublished: 1818>,
+    genre: "Gothic Fiction">,
+    isRead: false>,
+    isRecommended: true>
+}
+],'>
+
+<bx:dump var="#listOfBooks#" label="listOfBooks">
