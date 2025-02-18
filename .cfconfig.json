@@ -19,7 +19,7 @@
                 }
             },
             "datasources" : {
-                "**DSOURCENAME**":{
+                "Andrew_Rodriguez":{
                     "database":"${PDBNAME}",
                     "driver":"mysql",
                     "host":"${PHOST}",
