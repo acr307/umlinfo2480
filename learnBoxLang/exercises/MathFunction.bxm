@@ -1,6 +1,46 @@
 <h3>Math Functions</h3>
 Exercise: Using the function in the main article as a model, write a function that will multiply two numbers together. Call the function and pass in several different combination of numbers (i.e. <code>#addNumbers(5,3)# &lt;br/> #addNumbers(100,223)# </code> etc.)
+<ol>
+    <li><bx:output>5 * 5 = #multiplyNumbers(5,5)#</bx:output></li>
+    <li><bx:output>7 * 13 = #multiplyNumbers(7,13)#</bx:output></li>
+    <li><bx:output>200 * 3 = #multiplyNumbers(200,3)#</bx:output></li>
+    <li><bx:output>95 * 41 = #multiplyNumbers(95,41)#</bx:output></li>
+    <li><bx:output>60 * 0 = #multiplyNumbers(60,0)#</bx:output></li>
 
+</ol>
 
 <hr />
 Exercise: Can you make a form that accepts two numbers, submits it to the same page and then uses the function to add the two numbers together? All the information you need is in these docs.
+
+<form action="#cgi.script_name#?p=#p#" method="post">
+    <div class="mb-3">
+        <label for="firstnum" class="form-label">First Number</label>
+        <input type="numeric" class="form-control" id="firstnum" name="firstnum" placeholder="First Number">
+    </div>
+    <div class="mb-3">
+        <label for="secondnum" class="form-label">Second Number</label>
+        <input type="numeric" class="form-control" id="secondnum" name="secondnum" placeholder="Second Number">
+    </div>
+    <div>
+        <button class="btn btn-primary">Multiply!</button>
+    </div>
+</form>
+
+<bx:set myNumber=addNumbers(form.firstnum,form.secondnum)>
+<bx:dump var="#myNumber#" label="The Form Data" />
+
+
+
+
+
+<bx:function name="multiplyNumbers" access="private" returntype="numeric">
+    <bx:argument name="firstnum" type="numeric">
+    <bx:argument name="secondnum" type="numeric">
+    <bx:return #firstnum*secondnum#>
+</bx:function>
+
+<bx:function name="addNumbers" access="private" returntype="numeric">
+    <bx:argument name="firstnum" type="numeric">
+    <bx:argument name="secondnum" type="numeric">
+    <bx:return #firstnum + secondnum#>
+</bx:function>

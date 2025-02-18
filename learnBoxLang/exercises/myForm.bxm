@@ -2,3 +2,52 @@
 <p>Use HTML to create a form which submits to the same page. Make your form with 5 inputs that coincide with the 
     properties in your database. On the page include <code>&lt;bx:dump var="#form#" label="The Form Data" /></code> 
     so you can test the submission of the form.</p>
+
+<form action="#cgi.script_name#?p=#p#" method="post">
+    <div class="mb-3">
+        <label for="title" class="form-label">Book Title</label>
+        <input type="text" class="form-control" id="title" name="title" placeholder="Book Title">
+    </div>
+    <div class="mb-3">
+        <label for="author" class="form-label">Author</label>
+        <input type="text" class="form-control" id="author" name="author" placeholder="Author">
+    </div>
+    <div class="mb-3">
+        <label for="yearPublished" class="form-label">Year Published</label>
+        <input type="text" class="form-control" id="year-published" name="yearPublished" placeholder="Year Published">
+    </div>
+    <div class="mb-3">
+        <label for="genre" class="form-label">Book Genre</label>
+        <input type="text" class="form-control" id="genre" name="genre" placeholder="Book Genre">
+    </div>
+    
+    <div class="mb-3">
+        <label class="form-label">Have you read this book?</label>
+        <div>
+            <input type="radio" id="isRead-yes" name="isRead" value="true">
+            <label for="isRead-yes">Yes</label>
+        </div>
+        <div>
+            <input type="radio" id="isRead-no" name="isRead" value="false">
+            <label for="isRead-no">No</label>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Would you recommend this book?</label>
+        <div>
+            <input type="radio" id="isRecommended-yes" name="isRecommended" value="true">
+            <label for="isRecommended-yes">Yes</label>
+        </div>
+        <div>
+            <input type="radio" id="isRecommended-no" name="isRecommended" value="false">
+            <label for="isRecommended-no">No</label>
+        </div>
+    </div>
+
+    <div>
+        <button class="btn btn-primary">Submit</button>
+    </div>
+</form>
+
+<bx:dump var="#form#" label="The Form Data" />

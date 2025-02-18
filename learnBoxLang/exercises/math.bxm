@@ -1,2 +1,35 @@
-<p><strong>Exercise:</strong>Make an ordered list ( using the ol and li tags ). For each item, output a math problem using 
+<p><strong>Exercise:</strong> Make an ordered list ( using the ol and li tags ). For each item, output a math problem using 
     each operator least once and two numbers between 1 and 9 ( i.e. 1+9=????? ).</p>
+
+<ol>
+    <li>
+        <bx:output>
+            9 + 2 = #9+2#
+        </bx:output>
+    </li>
+    <li>
+        <bx:output>
+            7 - 4 = #7-4#
+        </bx:output>
+    </li>
+    <li>
+        <bx:output>
+            8 * 6 = #8*6#
+        </bx:output>
+    </li>
+    <li>
+        <bx:output>
+            9 / 3 = #9/3#
+        </bx:output>
+    </li>
+    <li>
+        <bx:output>
+            7 mod 2 = #7/2#
+        </bx:output>
+    </li>
+    <li>
+        <bx:output>
+            3^4 = #3^4#
+        </bx:output>
+    </li>
+</ol>
