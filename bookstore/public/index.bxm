@@ -1,3 +1,4 @@
+<bx:param name="t" default="carousel" />
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,8 +14,12 @@
     <bx:include template="header.bxm" />
     <bx:include template="horizontalnav.bxm" />
     <main id="maincontent" class="row">
-        <bx:include template="carousel.bxm" />
-        <bx:include template="genrenav.bxm" />
+        <div class="col-md-6">
+            <bx:include template="genrenav.bxm" />
+        </div>
+        <div class="col-md-6">
+            <bx:include template="#t#.bxm" />
+        </div>
     </main>
     <bx:include template="footer.bxm" />
 </div>

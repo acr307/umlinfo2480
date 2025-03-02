@@ -1,0 +1,7 @@
+<bx:param name="id" default="-1" />
+<bx:set articles = createObject("bookstore.common.articles") />
+<bx:set articleDetails = articles.articleById(id) />
+<bx:output>
+    <h1>#articleDetails.title#</h1>
+    <p>#articleDetails.description#</p>
+</bx:output>

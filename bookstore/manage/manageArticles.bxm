@@ -1,25 +1,42 @@
+<bx:param name="id" default="-1" />
+<bx:set common = createObject("bookstore.common.articles") />
 <h1>Manage Articles</h1>
 <bx:if form.keyExists("title")>
     <bx:dump var="#form#" />
     <bx:param name="form.active" default="0" />
-    <bx:set common = createObject("bookstore.common.articles") />
-    <bx:set common.saveArticle(form.title, form.description, form.active) />
+    <bx:set common.saveArticle(len(trim(form.id)) ? form.id : NULL, form.title, form.description, form.keyExists("status") ? 1 : 0) />
 </bx:if>
+<bx:set allArticles = common.allArticles() />
 <bx:output>
-    <form action="#cgi.script_name#" method="POST">
-        <div class="form-floating mb-3">
-            <label for="articleTitle">Title</label>
-            <input type="text" id="articleTitle" class="form-control" name="title">
+    <div class="row">
+        <div class="col">
+            <ol>
+                <li><a href="#cgi.script_name#?id=0">Create New Article</a></li>
+                <bx:loop query="allArticles">
+                    <li><a href="#cgi.script_name#?id=#id#">#title#</a></li>
+                </bx:loop>
+            </ol>
         </div>
-        <div class="form-floating mb-3">
-            <label for="articleBody">Body</label>
-            <textarea id="articleBody" class="form-control" name="description">
-            </textarea>
+        <div class="col">
+            <bx:if id gt -1>
+                <bx:set articleDetails = common.articleById(id) />
+                <form action="#cgi.script_name#" method="POST">
+                    <input name="id" value="#articleDetails.id#" />
+                    <div class="form-floating mb-3">
+                        <input type="text" id="title" class="form-control" name="title" placeholder="Title" value="#articleDetails.title#">
+                        <label for="title">Title</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <textarea id="description" class="form-control" name="description" placeholder="Description" >#articleDetails.description#</textarea>
+                        <label for="description">Description</label>
+                    </div>
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="checkbox" id="status" name="status" #articleDetails.status==1 ? "checked" : ""# />
+                        <label class="form-check-label" for="status">Active</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </form>
+            </bx:if>
         </div>
-        <div class="form-check mb-3">
-            <input class="form-check-input" type="checkbox" id="articleActive" name="articleActive" />
-            <label class="form-check-label" for="articleActive">Active</label>
-        </div>
-        <button type="submit" class="btn btn-primary">Save</button>
-    </form>
+    </div>
 </bx:output>
