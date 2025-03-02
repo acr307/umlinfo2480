@@ -1,4 +1,5 @@
 <div id="horizontalnav" class="row">
+    
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="#">
             <img src="../public/images/rdb.png" alt="Read Dees Books Logo"/>
