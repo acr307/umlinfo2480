@@ -1,0 +1,46 @@
+class {
+    function saveBooks(
+        required string isbn13,
+        required string title = "",
+        required string isbn,
+        required numeric weight = 0,
+        required numeric pages = 0,
+        required string binding = "",
+        required string language = ""
+    ) {
+        var cleanISBN13 = REReplace(arguments.isbn13, "^,", "", "all");
+        
+        queryExecute("
+            INSERT INTO books (isbn13, title, isbn, weight, pages, binding, language)
+            VALUES (:isbn13, :title, :isbn, :weight, :pages, :binding, :language)
+            ON DUPLICATE KEY UPDATE 
+                title = :title,
+                isbn = :isbn,
+                weight = :weight,
+                pages = :pages,
+                binding = :binding,
+                language = :language
+        ", {
+            isbn13: cleanISBN13,
+            title: arguments.title,
+            isbn: arguments.isbn,
+            weight: arguments.weight,
+            pages: arguments.pages,
+            binding: arguments.binding,
+            language: arguments.language
+        });
+    }
+
+    function searchBooks(string isbn13 = "", string title = "") {
+        var cleanISBN13 = REReplace(arguments.isbn13, "^,", "", "all");
+
+        return queryExecute("
+            SELECT * FROM books 
+            WHERE (:isbn13 = '' OR isbn13 = :isbn13)
+              AND (:title = '' OR title LIKE :title)
+        ", {
+            isbn13: cleanISBN13,
+            title: arguments.title
+        });
+    }
+}

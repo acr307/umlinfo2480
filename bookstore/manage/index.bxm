@@ -1,3 +1,4 @@
+<bx:param name="t" default="manageArticles" />
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,7 +14,7 @@
     <bx:include template="horizontalnav.bxm" />
     <main id="maincontent" class="row">
         <section id="center" class="col-sm-9 order-last">    
-            <bx:include template="managearticles.bxm" />
+            <bx:include template="#t#.bxm" />
         </section>
     </main>
     <bx:include template="footer.bxm" />
