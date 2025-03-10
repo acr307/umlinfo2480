@@ -3,10 +3,13 @@
     <bx:output>
         <p>There is one result for "#searchTerm#".</p>
         <div>Title: #bookinfo.title[1]#</div> 
-        <div>Publisher: #bookinfo.ISBN13[1]#</div> 
+        <div>ISBN13: #bookinfo.ISBN13[1]#</div> 
+        <div>Publisher ID: #bookinfo.publisherId[1]#</div>
         <div>Weight: #bookinfo.weight[1]#</div> 
         <div>Pages: #bookinfo.pages[1]#</div>
         <div>Binding: #bookinfo.binding[1]#</div>
         <div>Language: #bookinfo.language[1]#</div>
+        <div>Description: #bookinfo.description[1]#</div>
+        <img src="/bookstore/common/images/#bookinfo.image[1]#" alt="Cover Image" class="img-thumbnail" style="max-width: 200px;">
     </bx:output>
 </div>

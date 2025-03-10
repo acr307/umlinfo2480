@@ -1,8 +1,16 @@
 <bx:param name="isbn13" default="-1" />
 <bx:set common = createObject("bookstore.common.books") />
-<h1>Manage Books</h1>
+<bx:set allBooks = common.searchBooks() />
+<bx:set allPublishers = common.allPublishers() />
+<bx:set bookDetails = (isbn13 GT -1) ? common.searchBooks(isbn13) : {} />
 <bx:if form.keyExists("title")>
-    <bx:dump var="#form#" />
+    <bx:if form.keyExists("uploadimage") AND len(trim(form.uploadimage))>
+        <bx:set fileInfo = common.uploadFile("uploadimage") />
+        <bx:set form.image = fileInfo.serverFileName />
+    <bx:else>
+        <bx:set form.image = bookDetails.image />
+    </bx:if>
+
     <bx:set common.saveBooks(
         len(trim(form.isbn13)) ? form.isbn13 : NULL,
         form.title,
@@ -10,10 +18,13 @@
         val(form.weight),
         val(form.pages),
         form.binding,
-        form.language
+        form.language,
+        form.description,
+        form.image,
+        form.publisherId
     ) />
 </bx:if>
-<bx:set allBooks = common.searchBooks() />
+
 <bx:output>
     <div class="row">
         <div class="col-3">
@@ -24,43 +35,70 @@
                 </bx:loop>
             </ol>
         </div>
+
         <div class="col-9">
-            <bx:if isbn13 gt -1>
-                <bx:set bookDetails = common.searchBooks(isbn13) />    
-                <form action="#cgi.script_name#?t=addEdit" method="POST">
+            <bx:if isbn13 GT -1>
+                <form action="#cgi.script_name#?t=addEdit" method="POST" enctype="multipart/form-data">
+                    
                     <div class="form-floating mb-3">
-                        <input type="text" id="isbn13" class="form-control" name="isbn13" placeholder="ISBN-13 (13 digits)" value="#bookDetails.isbn13#">
-                        <label for="isbn13">ISBN-13</label>
+                        <input type="text" class="form-control" name="isbn13" placeholder="ISBN-13" value="#bookDetails.isbn13#">
+                        <label>ISBN-13</label>
                     </div>
 
                     <div class="form-floating mb-3">
-                        <input type="text" id="title" class="form-control" name="title" placeholder="Title" value="#bookDetails.title#">
-                        <label for="title">Title</label>
+                        <input type="text" class="form-control" name="title" placeholder="Title" value="#bookDetails.title#">
+                        <label>Title</label>
                     </div>
 
                     <div class="form-floating mb-3">
-                        <input type="text" id="isbn" class="form-control" name="isbn" placeholder="ISBN (10 digits)" value="#bookDetails.isbn#">
-                        <label for="isbn">ISBN</label>
+                        <input type="text" class="form-control" name="isbn" placeholder="ISBN" value="#bookDetails.isbn#">
+                        <label>ISBN</label>
                     </div>
 
                     <div class="form-floating mb-3">
-                        <input type="number" id="weight" class="form-control" name="weight" placeholder="Weight (grams)" value="#bookDetails.weight#">
-                        <label for="weight">Weight</label>
+                        <input type="number" class="form-control" name="weight" placeholder="Weight (grams)" value="#bookDetails.weight#">
+                        <label>Weight</label>
                     </div>
 
                     <div class="form-floating mb-3">
-                        <input type="number" id="pages" class="form-control" name="pages" placeholder="Pages" value="#bookDetails.pages#">
-                        <label for="pages">Pages</label>
+                        <input type="number" class="form-control" name="pages" placeholder="Pages" value="#bookDetails.pages#">
+                        <label>Pages</label>
                     </div>
 
                     <div class="form-floating mb-3">
-                        <input type="text" id="binding" class="form-control" name="binding" placeholder="Binding (e.g., Paperback)" value="#bookDetails.binding#">
-                        <label for="binding">Binding</label>
+                        <input type="text" class="form-control" name="binding" placeholder="Binding" value="#bookDetails.binding#">
+                        <label>Binding</label>
                     </div>
 
                     <div class="form-floating mb-3">
-                        <input type="text" id="language" class="form-control" name="language" placeholder="Language (e.g., ENG, ESP, FRA)" value="#bookDetails.language#">
-                        <label for="language">Language</label>
+                        <input type="text" class="form-control" name="language" placeholder="Language" value="#bookDetails.language#">
+                        <label>Language</label>
+                    </div>
+
+                    <div class="input-group mb-3">   
+                        <label for="uploadimage">Upload Cover</label>
+                        <input type="file" id="uploadimage" name="uploadimage" class="form-control" />
+                        <input type="hidden" name="image" value="#bookDetails.image#" />
+                    </div>
+
+                    <bx:if len(trim(bookDetails.image))>
+                        <img src="/bookstore/common/images/#bookDetails.image#" alt="Cover Image" class="img-thumbnail" style="max-width: 200px;">
+                    </bx:if>
+                
+                    <div class="form-floating mb-3">
+                        <textarea id="description" name="description" class="form-control">#bookDetails.description#</textarea>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <select class="form-select" name="publisherId">
+                            <option value="">Select Publisher</option> 
+                            <bx:loop query="allPublishers">
+                                <option value="#id#" #(id & '' == bookDetails.publisherId & '') ? "selected" : ""#>
+                                    #name#
+                                </option>                            
+                            </bx:loop>
+                        </select>
+                        <label>Publisher</label>
                     </div>
 
                     <button type="submit" class="btn btn-primary">Save</button>
@@ -69,3 +107,27 @@
         </div>
     </div>
 </bx:output>
+
+<!-- Restoring Your WYSIWYG Editor -->
+<script>
+    const {
+        ClassicEditor,
+        Essentials,
+        Bold,
+        Italic,
+        Font,
+        Paragraph
+    } = CKEDITOR;
+
+    ClassicEditor
+        .create( document.querySelector( '#description' ), {
+            licenseKey: 'eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE3NzMxODcxOTksImp0aSI6IjM5ZjU5NDRkLWM3NmEtNDQ4Ni1iNDk2LTgyZjgxOWUzYjVkNCIsImxpY2Vuc2VkSG9zdHMiOlsiMTI3LjAuMC4xIiwibG9jYWxob3N0IiwiMTkyLjE2OC4qLioiLCIxMC4qLiouKiIsIjE3Mi4qLiouKiIsIioudGVzdCIsIioubG9jYWxob3N0IiwiKi5sb2NhbCJdLCJ1c2FnZUVuZHBvaW50IjoiaHR0cHM6Ly9wcm94eS1ldmVudC5ja2VkaXRvci5jb20iLCJkaXN0cmlidXRpb25DaGFubmVsIjpbImNsb3VkIiwiZHJ1cGFsIl0sImxpY2Vuc2VUeXBlIjoiZGV2ZWxvcG1lbnQiLCJmZWF0dXJlcyI6WyJEUlVQIl0sInZjIjoiOGQxNTkzNDMifQ.i0V60bZIPT1SC0f2Wd52KWvQPbBStoUlcdFAEGlmYxf5C8rfaF51ehldbeU5UXVolVoSWbRAJHRgH75BFWHGnA',
+            plugins: [ Essentials, Bold, Italic, Font, Paragraph ],
+            toolbar: [
+                'undo', 'redo', '|', 'bold', 'italic', '|',
+                'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor'
+            ]
+        } )
+        .then( /* ... */ )
+        .catch( /* ... */ );
+</script>

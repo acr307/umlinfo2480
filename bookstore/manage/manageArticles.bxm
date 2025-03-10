@@ -1,3 +1,4 @@
+
 <bx:param name="id" default="-1" />
 <bx:set common = createObject("bookstore.common.articles") />
 <h1>Manage Articles</h1>
@@ -21,7 +22,7 @@
             <bx:if id gt -1>
                 <bx:set articleDetails = common.articleById(id) />
                 <form action="#cgi.script_name#" method="POST">
-                    <input name="id" value="#articleDetails.id#" />
+                    <input id="id" name="id" value="#articleDetails.id#" />
                     <div class="form-floating mb-3">
                         <input type="text" id="title" class="form-control" name="title" placeholder="Title" value="#articleDetails.title#">
                         <label for="title">Title</label>
@@ -40,3 +41,25 @@
         </div>
     </div>
 </bx:output>
+<script>
+    const {
+        ClassicEditor,
+        Essentials,
+        Bold,
+        Italic,
+        Font,
+        Paragraph
+    } = CKEDITOR;
+
+    ClassicEditor
+        .create( document.querySelector( '#description' ), {
+            licenseKey: 'eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE3NzMxODcxOTksImp0aSI6IjM5ZjU5NDRkLWM3NmEtNDQ4Ni1iNDk2LTgyZjgxOWUzYjVkNCIsImxpY2Vuc2VkSG9zdHMiOlsiMTI3LjAuMC4xIiwibG9jYWxob3N0IiwiMTkyLjE2OC4qLioiLCIxMC4qLiouKiIsIjE3Mi4qLiouKiIsIioudGVzdCIsIioubG9jYWxob3N0IiwiKi5sb2NhbCJdLCJ1c2FnZUVuZHBvaW50IjoiaHR0cHM6Ly9wcm94eS1ldmVudC5ja2VkaXRvci5jb20iLCJkaXN0cmlidXRpb25DaGFubmVsIjpbImNsb3VkIiwiZHJ1cGFsIl0sImxpY2Vuc2VUeXBlIjoiZGV2ZWxvcG1lbnQiLCJmZWF0dXJlcyI6WyJEUlVQIl0sInZjIjoiOGQxNTkzNDMifQ.i0V60bZIPT1SC0f2Wd52KWvQPbBStoUlcdFAEGlmYxf5C8rfaF51ehldbeU5UXVolVoSWbRAJHRgH75BFWHGnA',
+            plugins: [ Essentials, Bold, Italic, Font, Paragraph ],
+            toolbar: [
+                'undo', 'redo', '|', 'bold', 'italic', '|',
+                'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor'
+            ]
+        } )
+        .then( /* ... */ )
+        .catch( /* ... */ );
+</script>
