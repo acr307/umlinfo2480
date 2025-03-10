@@ -3,5 +3,5 @@
 <bx:set articleDetails = articles.articleById(id) />
 <bx:output>
     <h1>#articleDetails.title#</h1>
-    <p>#articleDetails.description#</p>
+    <div>#articleDetails.description#</div>
 </bx:output>

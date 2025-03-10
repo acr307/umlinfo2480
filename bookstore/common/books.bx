@@ -6,19 +6,25 @@ class {
         required numeric weight = 0,
         required numeric pages = 0,
         required string binding = "",
-        required string language = ""
+        required string language = "",
+        string description = "",
+        string image = "",
+        numeric publisherId = 0
     ) {
         
         queryExecute("
-            INSERT INTO books (isbn13, title, isbn, weight, pages, binding, language)
-            VALUES (:isbn13, :title, :isbn, :weight, :pages, :binding, :language)
+            INSERT INTO books (isbn13, title, isbn, weight, pages, binding, language, description, image, publisherId)
+            VALUES (:isbn13, :title, :isbn, :weight, :pages, :binding, :language, :description, :image, :publisherId)
             ON DUPLICATE KEY UPDATE 
                 title = :title,
                 isbn = :isbn,
                 weight = :weight,
                 pages = :pages,
                 binding = :binding,
-                language = :language
+                language = :language,
+                description = :description,
+                image = :image,
+                publisherId = :publisherId
         ", {
             isbn13: arguments.isbn13,
             title: arguments.title,
@@ -26,7 +32,10 @@ class {
             weight: arguments.weight,
             pages: arguments.pages,
             binding: arguments.binding,
-            language: arguments.language
+            language: arguments.language,
+            description: arguments.description,
+            image: arguments.image,
+            publisherId: arguments.publisherId
         });
     }
 
@@ -41,4 +50,17 @@ class {
         });
     }
     
+    function allPublishers(string name = "") {
+        return queryExecute("
+            SELECT * FROM publishers 
+            WHERE (:name = '' OR name = :name)
+        ", {
+            name: trim(arguments.name)
+        });
+    }
+
+    function uploadFile( string fileField ){
+        return fileUpload(expandPath("/bookstore/common/images/"),fileField,"*","makeUnique");
+     }
+
 }
