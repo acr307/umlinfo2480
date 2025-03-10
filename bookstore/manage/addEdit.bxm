@@ -1,0 +1,71 @@
+<bx:param name="isbn13" default="-1" />
+<bx:set common = createObject("bookstore.common.books") />
+<h1>Manage Books</h1>
+<bx:if form.keyExists("title")>
+    <bx:dump var="#form#" />
+    <bx:set common.saveBooks(
+        len(trim(form.isbn13)) ? form.isbn13 : NULL,
+        form.title,
+        form.isbn,
+        val(form.weight),
+        val(form.pages),
+        form.binding,
+        form.language
+    ) />
+</bx:if>
+<bx:set allBooks = common.searchBooks() />
+<bx:output>
+    <div class="row">
+        <div class="col-3">
+            <ol>
+                <li><a href="#cgi.script_name#?t=addEdit&isbn13=0">Add New Book</a></li>
+                <bx:loop query="allBooks">
+                    <li><a href="#cgi.script_name#?t=addEdit&isbn13=#isbn13#">#title#</a></li>
+                </bx:loop>
+            </ol>
+        </div>
+        <div class="col-9">
+            <bx:if isbn13 gt -1>
+                <bx:set bookDetails = common.searchBooks(isbn13) />    
+                <form action="#cgi.script_name#?t=addEdit" method="POST">
+                    <div class="form-floating mb-3">
+                        <input type="text" id="isbn13" class="form-control" name="isbn13" placeholder="ISBN-13 (13 digits)" value="#bookDetails.isbn13#">
+                        <label for="isbn13">ISBN-13</label>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input type="text" id="title" class="form-control" name="title" placeholder="Title" value="#bookDetails.title#">
+                        <label for="title">Title</label>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input type="text" id="isbn" class="form-control" name="isbn" placeholder="ISBN (10 digits)" value="#bookDetails.isbn#">
+                        <label for="isbn">ISBN</label>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input type="number" id="weight" class="form-control" name="weight" placeholder="Weight (grams)" value="#bookDetails.weight#">
+                        <label for="weight">Weight</label>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input type="number" id="pages" class="form-control" name="pages" placeholder="Pages" value="#bookDetails.pages#">
+                        <label for="pages">Pages</label>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input type="text" id="binding" class="form-control" name="binding" placeholder="Binding (e.g., Paperback)" value="#bookDetails.binding#">
+                        <label for="binding">Binding</label>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input type="text" id="language" class="form-control" name="language" placeholder="Language (e.g., ENG, ESP, FRA)" value="#bookDetails.language#">
+                        <label for="language">Language</label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </form>
+            </bx:if>
+        </div>
+    </div>
+</bx:output>

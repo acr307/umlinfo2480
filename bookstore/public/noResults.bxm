@@ -1,0 +1,7 @@
+<div>
+    <h2>No Results Found</h2>
+    <bx:output>
+        <p>There are no results for "#searchTerm#".</p>
+        <p>Please try again.</p>
+    </bx:output>
+</div>
