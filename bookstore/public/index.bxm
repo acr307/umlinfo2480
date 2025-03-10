@@ -1,4 +1,5 @@
 <bx:param name="t" default="carousel" />
+<bx:set bookstoreFunctions = createObject("bookstore.common.books") />
 <!DOCTYPE html>
 <html lang="en">
 <head>

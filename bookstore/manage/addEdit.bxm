@@ -1,16 +1,10 @@
-<bx:param name="u_isbn13" default="-1" />
-<!-- Store the incoming URL parameter in a local variable -->
-<bx:set myIsbn13 = u_isbn13 />
-
+<bx:param name="isbn13" default="-1" />
 <bx:set common = createObject("bookstore.common.books") />
 <h1>Manage Books</h1>
-
 <bx:if form.keyExists("title")>
     <bx:dump var="#form#" />
-    <!-- Save the book using form fields.
-         Notice that we now use "f_isbn13" for the ISBN13 field -->
     <bx:set common.saveBooks(
-        form.f_isbn13,
+        len(trim(form.isbn13)) ? form.isbn13 : NULL,
         form.title,
         form.isbn,
         val(form.weight),
@@ -19,37 +13,25 @@
         form.language
     ) />
 </bx:if>
-
-<!-- Retrieve all books for the side navigation -->
 <bx:set allBooks = common.searchBooks() />
-
 <bx:output>
     <div class="row">
-        <!-- Left column: Book list -->
         <div class="col-3">
             <ol>
-                <li><a href="#cgi.script_name#?t=addEdit&u_isbn13=0">Add New Book</a></li>
+                <li><a href="#cgi.script_name#?t=addEdit&isbn13=0">Add New Book</a></li>
                 <bx:loop query="allBooks">
-                    <li><a href="#cgi.script_name#?t=addEdit&u_isbn13=#isbn13#">#title#</a></li>
+                    <li><a href="#cgi.script_name#?t=addEdit&isbn13=#isbn13#">#title#</a></li>
                 </bx:loop>
             </ol>
         </div>
-
-        <!-- Right column: Form for editing/adding a book -->
-        <!-- Use our local variable (myIsbn13) to decide whether to show the form -->
-        <bx:if myIsbn13 neq "-1">
-            <div class="col-9">
-                <!-- 
-                     If myIsbn13 equals "0", prepare an empty struct for a new book.
-                     Otherwise, retrieve the book details by filtering on myIsbn13.
-                -->
-                <bx:set bookDetails = (myIsbn13 eq "0") ? 
-                    { isbn13: "", title: "", isbn: "", weight: "", pages: "", binding: "", language: "" } 
-                    : (common.searchBooks(myIsbn13))[1] />
-                
+        <div class="col-9">
+            <bx:if isbn13 gt -1>
+                <bx:set bookDetails = common.searchBooks(isbn13) />    
                 <form action="#cgi.script_name#?t=addEdit" method="POST">
-                    <!-- The form field "f_isbn13" is now used exclusively for ISBN13 -->
-                    <input type="hidden" name="f_isbn13" value="#bookDetails.isbn13#" />
+                    <div class="form-floating mb-3">
+                        <input type="text" id="isbn13" class="form-control" name="isbn13" placeholder="ISBN-13 (13 digits)" value="#bookDetails.isbn13#">
+                        <label for="isbn13">ISBN-13</label>
+                    </div>
 
                     <div class="form-floating mb-3">
                         <input type="text" id="title" class="form-control" name="title" placeholder="Title" value="#bookDetails.title#">
@@ -59,12 +41,6 @@
                     <div class="form-floating mb-3">
                         <input type="text" id="isbn" class="form-control" name="isbn" placeholder="ISBN (10 digits)" value="#bookDetails.isbn#">
                         <label for="isbn">ISBN</label>
-                    </div>
-
-                    <div class="form-floating mb-3">
-                        <!-- Display field for ISBN13 -->
-                        <input type="text" id="isbn13" class="form-control" name="f_isbn13_display" placeholder="ISBN-13 (13 digits)" value="#bookDetails.isbn13#">
-                        <label for="isbn13">ISBN-13</label>
                     </div>
 
                     <div class="form-floating mb-3">
@@ -89,7 +65,7 @@
 
                     <button type="submit" class="btn btn-primary">Save</button>
                 </form>
-            </div>
-        </bx:if>
+            </bx:if>
+        </div>
     </div>
 </bx:output>

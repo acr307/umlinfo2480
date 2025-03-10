@@ -8,7 +8,6 @@ class {
         required string binding = "",
         required string language = ""
     ) {
-        var cleanISBN13 = REReplace(arguments.isbn13, "^,", "", "all");
         
         queryExecute("
             INSERT INTO books (isbn13, title, isbn, weight, pages, binding, language)
@@ -21,7 +20,7 @@ class {
                 binding = :binding,
                 language = :language
         ", {
-            isbn13: cleanISBN13,
+            isbn13: arguments.isbn13,
             title: arguments.title,
             isbn: arguments.isbn,
             weight: arguments.weight,
@@ -32,15 +31,14 @@ class {
     }
 
     function searchBooks(string isbn13 = "", string title = "") {
-        var cleanISBN13 = REReplace(arguments.isbn13, "^,", "", "all");
-
         return queryExecute("
             SELECT * FROM books 
             WHERE (:isbn13 = '' OR isbn13 = :isbn13)
-              AND (:title = '' OR title LIKE :title)
+              AND (:title = '' OR title = :title)
         ", {
-            isbn13: cleanISBN13,
-            title: arguments.title
+            isbn13: trim(arguments.isbn13),
+            title: trim(arguments.title)
         });
     }
+    
 }

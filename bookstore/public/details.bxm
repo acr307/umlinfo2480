@@ -1,0 +1,11 @@
+<bx:set bookinfo = bookstoreFunctions.searchBooks(title=form.searchTerm) />
+
+<bx:output>
+    <bx:if bookinfo.recordcount == 0> 
+        <bx:include template="noResults.bxm" />
+    <bx:elseif bookinfo.recordcount == 1> 
+        <bx:include template="oneResult.bxm" />
+    <bx:else> 
+        <bx:include template="manyResults.bxm" />
+    </bx:if>
+</bx:output>
