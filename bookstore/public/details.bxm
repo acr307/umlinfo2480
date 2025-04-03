@@ -1,4 +1,5 @@
-<bx:set bookinfo = bookstoreFunctions.searchBooks(title=form.searchTerm) />
+<param name="searchTerm" default=""/>
+<bx:set bookinfo = bookstoreFunctions.searchBooks(title=searchTerm,isbn=searchTerm) />
 
 <bx:output>
     <bx:if bookinfo.recordcount == 0> 

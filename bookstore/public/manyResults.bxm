@@ -4,7 +4,7 @@
 <ol class="nav flex-column"> 
     <bx:output query="bookinfo"> 
    <li class="nav-item"> 
-       <a class="nav-link" href="#cgi.script_name#?p=details&searchTerm=#trim(isbn13)#"> 
+       <a class="nav-link" href="#cgi.script_name#?t=details&searchTerm=#trim(isbn13)#"> 
            #trim(title)# 
        </a> 
    </li> 
