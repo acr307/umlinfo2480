@@ -42,11 +42,11 @@ class {
     function searchBooks(string isbn13 = "", string title = "") {
         return queryExecute("
             SELECT * FROM books 
-            WHERE (:isbn13 = '' OR isbn13 = :isbn13)
-              AND (:title = '' OR title = :title)
+            WHERE (isbn13 = :isbn13)
+              OR ( title like :title)
         ", {
             isbn13: trim(arguments.isbn13),
-            title: trim(arguments.title)
+            title: '%#trim(arguments.title)#%'
         });
     }
     
