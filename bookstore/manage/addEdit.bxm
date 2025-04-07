@@ -1,18 +1,20 @@
 <bx:param name="isbn13" default="-1" />
 <bx:set common = createObject("bookstore.common.books") />
-<bx:set allBooks = common.searchBooks() />
+<bx:set allBooks = common.getAllBooks() />
 <bx:set allPublishers = common.allPublishers() />
-<bx:set bookDetails = (isbn13 GT -1) ? common.searchBooks(isbn13) : {} />
+<bx:set allGenres = common.allGenres() />
+<bx:set bookDetails = (isbn13 GT -1) ? common.getBookDetails(isbn13) : {} />
+<bx:set bookGenres = (isbn13 GT -1) ? common.allGenresForBook(isbn13) : queryNew("genreid") />
+
 <bx:if form.keyExists("title")>
-    <bx:if form.keyExists("uploadimage") AND len(trim(form.uploadimage))>
+    <bx:set form.image = bookDetails.image ?: '' />
+    <bx:if form.keyExists("uploadimage") AND len(trim(form.uploadimage?:''))>
         <bx:set fileInfo = common.uploadFile("uploadimage") />
         <bx:set form.image = fileInfo.serverFileName />
-    <bx:else>
-        <bx:set form.image = bookDetails.image />
     </bx:if>
 
     <bx:set common.saveBooks(
-        len(trim(form.isbn13)) ? form.isbn13 : NULL,
+        (form.keyExists("isbn13") AND len(trim(form.isbn13?:''))) ? form.isbn13 : NULL,
         form.title,
         form.isbn,
         val(form.weight),
@@ -20,9 +22,20 @@
         form.binding,
         form.language,
         form.description,
-        form.image,
+        len(trim(form.image?:'')) ? form.image : javacast('null', ''),
         form.publisherId
     ) />
+</bx:if>
+
+<bx:if form.keyExists("isbn13")>
+    <bx:script>
+    if(form.keyExists("genre")){
+       common.clearAllBookGenres(form.isbn13);
+       form.genre.listToArray().each(function(item){
+          common.saveGenreToBook(item, form.isbn13);
+       });
+    }
+    </bx:script>
 </bx:if>
 
 <bx:output>
@@ -99,6 +112,27 @@
                             </bx:loop>
                         </select>
                         <label>Publisher</label>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <div class="genre-selection">
+                            <label class="d-block mb-2">Genres</label>
+                            <div class="genre-checkboxes">
+                                <bx:loop query="allGenres">
+                                    <div class="form-check">
+                                        <input class="form-check-input" id="genre#id#" type="checkbox" name="genre" value="#id#" />
+                                        <label class="form-check-label" for="genre#id#">#name#</label>
+                                    </div>
+                                    <bx:if bookGenres.recordCount GT 0>
+                                        <bx:loop query="bookGenres">
+                                            <bx:if currentRow.id EQ bookGenres.genreid>
+                                                <script>document.getElementById('genre#id#').checked=true;</script>
+                                            </bx:if>
+                                        </bx:loop>
+                                    </bx:if>
+                                </bx:loop>
+                            </div>
+                        </div>
                     </div>
 
                     <button type="submit" class="btn btn-primary">Save</button>

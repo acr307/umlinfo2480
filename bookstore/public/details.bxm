@@ -1,5 +1,7 @@
-<param name="searchTerm" default=""/>
-<bx:set bookinfo = bookstoreFunctions.searchBooks(title=searchTerm,isbn=searchTerm) />
+<bx:param name="searchTerm" default="" />
+<bx:param name="genreId" default=0 />
+<bx:set common = createObject("bookstore.common.books") />
+<bx:set bookinfo = common.searchBooks(searchTerm, genreId) />
 
 <bx:output>
     <bx:if bookinfo.recordcount == 0> 
@@ -9,4 +11,9 @@
     <bx:else> 
         <bx:include template="manyResults.bxm" />
     </bx:if>
+    <div>Publisher: 
+        <a href="#cgi.script_name#?t=details&searchTerm=#bookinfo.publisherId[1]#">
+            #bookinfo.publisherName[1]#
+        </a>
+    </div>
 </bx:output>
