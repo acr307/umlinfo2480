@@ -30,6 +30,18 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">Events</a>
                 </li>
+                <bx:set common = createObject("bookstore.common.books") />
+                <bx:set genres = common.distinctGenres() />
+
+                <bx:output>
+                    <bx:loop query="genres">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#cgi.SCRIPT_NAME#?t=details&genre=#id#">
+                                #name#
+                            </a>
+                        </li>
+                    </bx:loop>
+                </bx:output>
             </ul>
             <form class="d-flex">
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">

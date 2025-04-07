@@ -11,7 +11,6 @@ class {
         string image = "",
         numeric publisherId = 0
     ) {
-        
         queryExecute("
             INSERT INTO books (isbn13, title, isbn, weight, pages, binding, language, description, image, publisherId)
             VALUES (:isbn13, :title, :isbn, :weight, :pages, :binding, :language, :description, :image, :publisherId)
@@ -23,7 +22,7 @@ class {
                 binding = :binding,
                 language = :language,
                 description = :description,
-                image = :image,
+                image = IFNULL(:image, image),
                 publisherId = :publisherId
         ", {
             isbn13: arguments.isbn13,
@@ -34,20 +33,33 @@ class {
             binding: arguments.binding,
             language: arguments.language,
             description: arguments.description,
-            image: arguments.image,
+            image: len(trim(arguments.image)) ? arguments.image : javacast('null', ''),
             publisherId: arguments.publisherId
         });
     }
 
-    function searchBooks(string isbn13 = "", string title = "") {
-        return queryExecute("
-            SELECT * FROM books 
-            WHERE (isbn13 = :isbn13)
-              OR ( title like :title)
-        ", {
-            isbn13: trim(arguments.isbn13),
-            title: '%#trim(arguments.title)#%'
-        });
+    function searchBooks(string searchTerm="", numeric genreId=0) {
+        if(searchTerm.len() != 0) {
+             return queryExecute("
+                SELECT books.*, publishers.name as publisherName 
+                FROM books
+                LEFT JOIN publishers ON books.publisherId = publishers.id
+                WHERE title LIKE :searchTerm
+                OR isbn13 = :searchTermExact",
+                { 
+                    searchTerm: '%#trim(arguments.searchTerm)#%',
+                    searchTermExact: arguments.searchTerm
+                });
+        } else if(genreId > 0) {
+            return queryExecute("
+                SELECT DISTINCT books.*, publishers.name as publisherName
+                FROM books
+                INNER JOIN genresToBooks ON books.isbn13 = genresToBooks.isbn13
+                LEFT JOIN publishers ON books.publisherId = publishers.id
+                WHERE genresToBooks.genreId = :genreId",
+                {genreId: arguments.genreId});
+        }
+        return queryNew('isbn13,title,publisherName');
     }
     
     function allPublishers(string name = "") {
@@ -61,6 +73,58 @@ class {
 
     function uploadFile( string fileField ){
         return fileUpload(expandPath("/bookstore/common/images/"),fileField,"*","makeUnique");
-     }
+    }
 
+    function allGenres() {
+        return queryExecute("SELECT id, name FROM genres ORDER BY name", {}, {returnType: 'query'});
+    }
+    
+    function saveGenreToBook(numeric genreId, string isbn13) {
+        return queryExecute("INSERT INTO genresToBooks (genreId, isbn13) VALUES (:genreId, :isbn13)",
+            {genreId: arguments.genreId, isbn13: arguments.isbn13}
+        );
+    }
+    
+    function clearAllBookGenres(string isbn13) {
+        return queryExecute("DELETE FROM genresToBooks WHERE isbn13 = :isbn13",
+            {isbn13: arguments.isbn13}
+        );
+    }
+    
+    function allGenresForBook(numeric genreId=0, string isbn13='') {
+        var ourSQL = "select b.*, g.name as genreName from books b 
+              inner join genresToBooks gtb on b.isbn13 = gtb.isbn13
+              inner join genres g on gtb.genreId = g.id";
+              
+        if(arguments.genreId > 0){
+           ourSQL &= " where gtb.genreId = #arguments.genreId#";
+        }
+        if(arguments.isbn13.len() > 0){
+           ourSQL &= " and gtb.isbn13 = '#arguments.isbn13#'";
+        }
+        
+        return queryExecute(ourSQL);
+    }
+    
+    function distinctGenres() {
+        return queryExecute("SELECT DISTINCT g.id, g.name FROM genresToBooks gtb 
+             INNER JOIN genres g ON g.id = gtb.genreId ORDER BY g.name");
+    }
+    
+    function getAllBooks() {
+        return queryExecute("
+            SELECT books.*, publishers.name as publisherName 
+            FROM books
+            LEFT JOIN publishers ON books.publisherId = publishers.id
+            ORDER BY books.title");
+    }
+    
+    function getBookDetails(string isbn13) {
+        return queryExecute("
+            SELECT books.*, publishers.name as publisherName 
+            FROM books
+            LEFT JOIN publishers ON books.publisherId = publishers.id
+            WHERE books.isbn13 = :isbn13",
+            {isbn13: arguments.isbn13});
+    }
 }

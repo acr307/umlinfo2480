@@ -4,7 +4,7 @@
         <p>There is one result for "#searchTerm#".</p>
         <div>Title: #bookinfo.title[1]#</div> 
         <div>ISBN13: #bookinfo.ISBN13[1]#</div> 
-        <div>Publisher ID: #bookinfo.publisherId[1]#</div>
+        <div>Publisher: #bookinfo.publisherName[1]#</div>
         <div>Weight: #bookinfo.weight[1]#</div> 
         <div>Pages: #bookinfo.pages[1]#</div>
         <div>Binding: #bookinfo.binding[1]#</div>
